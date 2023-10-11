@@ -13,7 +13,7 @@ headers = {
 }
 
 data = {
-  "prompt" => "Discussion sur un sujet",
+  "prompt" => gets.chomp,
   "max_tokens" => 500,
   "temperature" => 0,
 }
@@ -22,10 +22,12 @@ response = HTTP.post(url, headers: headers, body: data.to_json)
 response_body = JSON.parse(response.body.to_s)
 response_string = response_body['choices'][0]['text'].strip
 
-# ligne qui permet d'envoyer l'information sur ton terminal
-puts "On va discuter ensemble :"
-puts gets.chomp
-puts response_string
-if gets.chomp == "stop"
-    break
+loop do 
+
+  print "Ton message :"
+  puts gets.chomp
+  print "ChatGPT a dit : "
+  puts response_string
+
+  break if gets.chomp == "stop"
 end
